@@ -44,6 +44,8 @@ public class BookStore
         final BookStore bookstore;
         bookstore = new BookStore("Classic Novels Collection");
 
+        System.out.println(bookstore.getName());
+
         System.out.println("All Titles in UPPERCASE:");
         bookstore.printAllTitles();
 
