@@ -198,6 +198,7 @@ public class BookStore
     {
         final List<String> titles;
         titles = novels.stream()
+                       .filter(Objects::nonNull)
                        .map(novel -> novel.getTitle().toUpperCase()).toList();
 
         titles.forEach(System.out::println);
@@ -212,6 +213,7 @@ public class BookStore
     {
         final List<String> titlesFounds;
         titlesFounds = novels.stream()
+                             .filter(Objects::nonNull)
                              .map(Novel::getTitle)
                              .filter(novelTitle -> novelTitle.toUpperCase().contains(title.toUpperCase()))
                              .toList();
@@ -226,6 +228,7 @@ public class BookStore
     {
         final List<String> titlesInAlphaOrder;
         titlesInAlphaOrder = novels.stream()
+                                   .filter(Objects::nonNull)
                                    .map(Novel::getTitle)
                                    .sorted(Comparator.comparing(title -> title))
                                    .toList();
@@ -243,6 +246,7 @@ public class BookStore
         final List<Novel> novelsGroupByDecade;
         novelsGroupByDecade =
                 novels.stream()
+                      .filter(Objects::nonNull)
                       .filter(novel -> novel.getYearPublished() >= decade && novel.getYearPublished() < (decade + DECADES))
                       .toList();
 
@@ -257,7 +261,10 @@ public class BookStore
     public String getLongestTitle()
     {
         Optional<String> longestTitle;
-        longestTitle = novels.stream().map(Novel::getTitle).max(Comparator.comparing(String::length));
+        longestTitle = novels.stream()
+                             .filter(Objects::nonNull)
+                             .map(Novel::getTitle)
+                             .max(Comparator.comparing(String::length));
 
         return longestTitle.orElse(null);
     }
@@ -286,6 +293,7 @@ public class BookStore
     {
         final long numberOfBooksContained;
         numberOfBooksContained = novels.stream()
+                                       .filter(Objects::nonNull)
                                        .filter(novel -> novel.getTitle().toUpperCase().contains(word.toUpperCase()))
                                        .count();
 
@@ -302,9 +310,10 @@ public class BookStore
     public double whichPercentWrittenBetween(final int first, final int last)
     {
         final long numberOfBooksBetween = novels.stream()
-                                               .mapToDouble(Novel::getYearPublished)
-                                               .filter(year -> year >= first && year <= last)
-                                               .count();
+                                                .filter(Objects::nonNull)
+                                                .mapToDouble(Novel::getYearPublished)
+                                                .filter(year -> year >= first && year <= last)
+                                                .count();
 
         return ((double) numberOfBooksBetween / novels.size()) * MAX_PERCENTAGE;
     }
@@ -317,7 +326,9 @@ public class BookStore
     public Novel getOldestBook()
     {
         final Optional<Novel> oldestBook;
-        oldestBook = novels.stream().min(Comparator.comparing(Novel::getYearPublished));
+        oldestBook = novels.stream()
+                           .filter(Objects::nonNull)
+                           .min(Comparator.comparing(Novel::getYearPublished));
 
         return oldestBook.orElse(null);
     }
@@ -332,6 +343,7 @@ public class BookStore
     {
         List<Novel> booksThisLength;
         booksThisLength = novels.stream()
+                                .filter(Objects::nonNull)
                                 .filter(novel -> novel.getTitle()
                                 .length() == titleLength)
                                 .toList();
