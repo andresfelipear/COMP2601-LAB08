@@ -3,7 +3,7 @@ import java.util.*;
 /**
  * BookStore
  *
- * @author Andres Arevalo, Marius Guerra & Raaz
+ * @author Andres Arevalo, Marius Guerra, Raaz & Lida Zarei
  * @version 1.0
  */
 public class BookStore
